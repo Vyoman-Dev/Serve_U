@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Worker Dashboard | ServeU</title>
+
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="worker-dashboard.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="worker-dashboard">
+
+    <header class="dashboard-nav">
+        <a href="index.html" class="logo">ServeU<span>.</span></a>
+
+        <nav class="worker-nav">
+            <button class="worker-nav-link active" data-page="workerHome">Home</button>
+            <button class="worker-nav-link" data-page="myRequests">My Requests</button>
+            <button class="worker-nav-link" data-page="customerReviews">Customer Reviews</button>
+            <button class="worker-nav-link" data-page="revisitRequests">Revisit Requests</button>
+            <button class="worker-nav-link" data-page="availability">Availability</button>
+            <button class="worker-nav-link" data-page="servicePrices">My Prices</button>
+            <button class="worker-nav-link" data-page="workerPayments">Payments</button>
+        </nav>
+        <button type="button" id="workerLogoutButton" class="worker-logout-btn">
+            Logout
+        </button>
+    </header>
+
+    <main class="dashboard-main">
+
+        <!-- Welcome section -->
+        <section id="workerHome" class="worker-page active">
+            <div class="worker-hero">
+
+                <div class="worker-hero-content">
+                    <p class="eyebrow">YOUR WORKSPACE</p>
+
+                    <h1 id="workerWelcome">Welcome!</h1>
+
+                    <p class="worker-hero-description">
+                        Manage your service requests, connect with customers
+                        and build your reputation through quality work.
+                    </p>
+
+                    <div class="worker-hero-actions">
+                        <a href="#requests" class="worker-hero-link">
+                            View my requests <span>→</span>
+                        </a>
+
+                        <a href="#reviews" class="worker-hero-secondary-link">
+                            View reviews
+                        </a>
+                    </div>
+                </div>
+
+                <div class="worker-hero-art" aria-hidden="true">
+                    <div class="worker-hero-art-circle"></div>
+                    <span>🧰</span>
+
+                    <div class="worker-hero-art-label">
+                        <span>✦</span> Your work matters
+                    </div>
+                </div>
+
+        </section>
+
+        <!-- Customer reviews -->
+        <section id="customerReviews" class="worker-page dashboard-section worker-reviews-section">
+
+            <div class="section-heading worker-section-heading">
+                <div>
+                    <p class="eyebrow">CUSTOMER FEEDBACK</p>
+                    <h2>Customer Reviews</h2>
+                    <p class="worker-section-subtitle">
+                        See what customers say about your work and service.
+                    </p>
+                </div>
+            </div>
+
+            <div id="workerReviewSummary" class="worker-review-summary"></div>
+
+            <div id="workerReviewsList" class="worker-reviews-list">
+                <p class="loading-message">Loading customer reviews...</p>
+            </div>
+
+        </section>
+
+        <!-- Service requests -->
+        <section id="myRequests" class="worker-page dashboard-section worker-requests-section">
+
+            <div class="section-heading worker-section-heading">
+                <div>
+                    <p class="eyebrow">MANAGE YOUR WORK</p>
+                    <h2>Service Requests</h2>
+                    <p class="worker-section-subtitle">
+                        Review customer bookings and manage your ongoing jobs.
+                    </p>
+                </div>
+
+                <button id="refreshRequests" class="refresh-button">
+                    ↻ Refresh
+                </button>
+            </div>
+
+            <div id="workerRequestList" class="worker-request-list">
+                <p class="loading-message">Loading your requests...</p>
+            </div>
+
+        </section>
+
+        <!-- Worker Revisit Requests -->
+        <section id="revisitRequests" class="worker-page dashboard-section">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">SERVICE FOLLOW-UP</p>
+                    <h2>Pending Revisit Requests</h2>
+                    <p class="customer-section-subtitle">
+                        Propose a new appointment date and time for customers
+                        who need a revisit.
+                    </p>
+                </div>
+
+                <div class="booking-heading-icon" aria-hidden="true">📅</div>
+            </div>
+
+            <div id="workerRevisitList">
+                <p>Loading revisit requests...</p>
+            </div>
+
+        </section>
+
+        <!-- Worker Availability Management -->
+        <section id="availability" class="worker-page dashboard-section">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">MANAGE YOUR SCHEDULE</p>
+                    <h2>My Availability</h2>
+                    <p class="worker-section-subtitle">
+                        Set and manage the days and time slots when customers
+                        can book your services.
+                    </p>
+                </div>
+                <div class="booking-heading-icon" aria-hidden="true">🗓️</div>
+            </div>
+
+            <!-- Add Availability Form -->
+            <div class="availability-form-card">
+                <h3>Add Availability</h3>
+
+                <form id="availabilityForm">
+
+                    <label for="availableDay">Available Day</label>
+                    <select id="availableDay" required>
+                        <option value="">Select a day</option>
+                        <option value="MONDAY">Monday</option>
+                        <option value="TUESDAY">Tuesday</option>
+                        <option value="WEDNESDAY">Wednesday</option>
+                        <option value="THURSDAY">Thursday</option>
+                        <option value="FRIDAY">Friday</option>
+                        <option value="SATURDAY">Saturday</option>
+                        <option value="SUNDAY">Sunday</option>
+                    </select>
+
+                    <label for="availableStartTime">Start Time</label>
+                    <input type="time" id="availableStartTime" required>
+
+                    <label for="availableEndTime">End Time</label>
+                    <input type="time" id="availableEndTime" required>
+
+                    <button type="submit" class="refresh-button">Add Availability</button>
+
+                    <p id="availabilityMessage" role="status"></p>
+
+                </form>
+
+            </div>
+
+            <!-- Existing Availability List -->
+            <div class="availability-list-card">
+
+                <div class="section-heading">
+                    <h3>My Saved Availability</h3>
+
+                    <button type="button" id="refreshAvailability" class="refresh-button">
+                        ↻ Refresh
+                    </button>
+                </div>
+
+                <div id="workerAvailabilityList">
+                    <p class="loading-message">
+                        Loading your availability...
+                    </p>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <section id="servicePrices" class="worker-page dashboard-section">
+
+            <!-- Add or Edit Service Price -->
+            <div class="availability-form-card">
+                <h3 id="priceFormTitle">Add a Service Price</h3>
+
+                <form id="servicePriceForm">
+
+                    <label for="serviceName">Service Name</label>
+                    <input type="text" id="serviceName" maxlength="100" placeholder="Example: Tap Repair" required>
+
+                    <label for="servicePrice">Service Price (₹)</label>
+                    <input type="number" id="servicePrice" min="0.01" step="0.01" placeholder="Enter service price"
+                        required>
+
+                    <label for="inspectionFee">Inspection Fee (₹)</label>
+                    <input type="number" id="inspectionFee" min="0" step="0.01" placeholder="Enter inspection fee"
+                        required>
+
+                    <button type="submit" class="refresh-button" id="savePriceButton">
+                        Add Service Price
+                    </button>
+
+                    <button type="button" class="refresh-button" id="cancelPriceEdit" hidden>
+                        Cancel Edit
+                    </button>
+
+                    <p id="priceMessage" role="status"></p>
+
+                </form>
+            </div>
+
+            <!-- Existing Price List -->
+            <div class="availability-list-card">
+                <div class="section-heading">
+                    <h3>My Service Price List</h3>
+
+                    <button type="button" id="refreshPrices" class="refresh-button">
+                        ↻ Refresh
+                    </button>
+                </div>
+
+                <div id="workerPriceList">
+                    <p class="loading-message">Loading your service prices...</p>
+                </div>
+            </div>
+
+        </section>
+
+
+        <!-- Worker Payments -->
+        <section id="workerPayments" class="worker-page dashboard-section">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">EARNINGS MANAGEMENT</p>
+                    <h2>My Payments</h2>
+                    <p class="worker-section-subtitle">
+                        Track customer payments and confirm the money you receive.
+                    </p>
+                </div>
+
+                <div class="booking-heading-icon">💰</div>
+            </div>
+
+            <div id="workerPaymentSummary" class="worker-payment-summary">
+                <p>Loading payment summary...</p>
+            </div>
+
+            <div id="workerPaymentList" class="worker-payment-list">
+                <p>Loading payments...</p>
+            </div>
+
+            <p id="workerPaymentMessage" role="status"></p>
+
+        </section>
+
+    </main>
+
+    <footer class="dashboard-footer">
+        <p>ServeU <span>·</span> Reliable local services, made simple.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="worker-dashboard.js"></script>
+    <script src="worker-payment.js"></script>
+
+</body>
+
+</html>

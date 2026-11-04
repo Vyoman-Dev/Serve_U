@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard | ServeU</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="customer-dashboard">
+
+
+    <header class="dashboard-nav">
+        <a href="index.html" class="logo">ServeU<span>.</span></a>
+
+        <nav>
+            <button class="customer-nav-link active" data-page="home">Home</button>
+            <button class="customer-nav-link" data-page="services">Explore Services</button>
+            <button class="customer-nav-link" data-page="requests">My Bookings</button>
+            <button class="customer-nav-link" data-page="proposedRevisits">Revisits</button>
+            <button class="customer-nav-link" data-page="reports">Report a Problem</button>
+            <button class="customer-nav-link" data-page="payments">Payments</button>
+            <button id="logoutButton" class="logout-btn">Logout</button>
+        </nav>
+    </header>
+
+
+    <main class="dashboard-main">
+
+        <!-- Welcome section -->
+
+        <section id="home" class="customer-hero customer-page active">
+            <div class="customer-hero-content">
+                <p class="eyebrow">YOUR LOCAL SERVICE MARKETPLACE</p>
+
+                <h1 id="welcomeMessage">Welcome!</h1>
+
+                <p class="customer-hero-description">
+                    Your home deserves the best care.
+                    Find trusted local professionals for
+                    repairs, maintenance and everyday services.
+                </p>
+
+                <button class="customer-hero-link customer-nav-link" data-page="services">
+                    Explore services <span>→</span>
+                </button>
+            </div>
+
+            <div class="customer-hero-art" aria-hidden="true">
+                <div class="customer-hero-art-circle"></div>
+                <span>🏡</span>
+                <div class="customer-hero-art-label">
+                    <span>✦</span> Help is nearby
+                </div>
+            </div>
+        </section>
+
+        <!-- Services section -->
+        <section id="services" class="dashboard-section customer-services customer-page">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">FIND YOUR PROFESSIONAL</p>
+                    <h2>What do you need help with?</h2>
+                    <p class="customer-section-subtitle">
+                        Browse services and connect with trusted local workers.
+                    </p>
+                </div>
+
+                <span class="service-count-label">EXPLORE SERVICES</span>
+            </div>
+
+            <div class="customer-search">
+                <span aria-hidden="true">⌕</span>
+                <input type="search" id="serviceSearch" placeholder="Search plumbing, electrical, cleaning..."
+                    aria-label="Search services">
+            </div>
+
+            <div id="categoryList" class="category-grid">
+                <p>Loading services...</p>
+            </div>
+
+        </section>
+
+        <!-- Bookings section -->
+        <section id="requests" class="dashboard-section customer-bookings customer-page">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">YOUR SERVICE ACTIVITY</p>
+                    <h2>My Service Bookings</h2>
+                    <p class="customer-section-subtitle">
+                        Keep track of your requests, appointments and service updates.
+                    </p>
+                </div>
+
+                <div class="booking-heading-icon" aria-hidden="true">📋</div>
+            </div>
+
+            <div id="customerRequestsList" class="customer-request-list">
+                <p class="customer-empty-message">
+                    Loading your bookings...
+                </p>
+            </div>
+
+        </section>
+
+        <!-- Proposed Revisit Appointments section -->
+        <section id="proposedRevisits" class="dashboard-section customer-page">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">SERVICE FOLLOW-UP</p>
+                    <h2>Proposed Revisit Appointments</h2>
+                    <p class="customer-section-subtitle">
+                        View appointment dates and times proposed by your workers.
+                    </p>
+                </div>
+
+                <div class="booking-heading-icon" aria-hidden="true">📅</div>
+            </div>
+
+            <div id="proposedRevisitsList">
+                <p>Loading proposed appointments...</p>
+            </div>
+
+        </section>
+
+        <!-- Report a Problem section -->
+        <section id="reports" class="dashboard-section customer-reports customer-page">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">CUSTOMER SUPPORT</p>
+                    <h2>Report a Problem</h2>
+                    <p class="customer-section-subtitle">
+                        Facing an issue with a service or worker?
+                        Tell us what happened.
+                    </p>
+                </div>
+
+                <div class="booking-heading-icon" aria-hidden="true">🛡️</div>
+            </div>
+
+            <form id="customerReportForm">
+
+                <div class="form-group">
+                    <label for="reportRequestId">Select Service Booking</label>
+                    <select id="reportRequestId" name="requestId" required>
+                        <option value="">Select a booking</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="reportReason">Reason for Report</label>
+                    <select id="reportReason" name="reason" required>
+                        <option value="">Select a reason</option>
+                        <option value="Poor Service Quality">Poor Service Quality</option>
+                        <option value="Worker Misconduct">Worker Misconduct</option>
+                        <option value="Payment Dispute">Payment Dispute</option>
+                        <option value="Unexpected Charges">Unexpected Charges</option>
+                        <option value="Worker Did Not Arrive">Worker Did Not Arrive</option>
+                        <option value="Incomplete Work">Incomplete Work</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="reportDescription">Describe Your Problem</label>
+                    <textarea id="reportDescription" name="description" rows="5" maxlength="500"
+                        placeholder="Explain what happened..." required></textarea>
+                </div>
+
+                <button type="submit" class="logout-btn">
+                    Submit Report
+                </button>
+
+                <p id="reportMessage" role="status"></p>
+
+            </form>
+
+            <!-- Submitted reports -->
+            <div class="customer-my-reports">
+                <h3>My Reports</h3>
+                <p class="customer-section-subtitle">
+                    Track the progress of your submitted reports.
+                </p>
+
+                <div id="customerReportsList">
+                    <p>Loading your reports...</p>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Payments section -->
+        <section id="payments" class="dashboard-section customer-page">
+
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">PAYMENT MANAGEMENT</p>
+                    <h2>My Payments</h2>
+                    <p class="customer-section-subtitle">
+                        Submit payment details for completed services and track payment status.
+                    </p>
+                </div>
+
+                <div class="booking-heading-icon">💳</div>
+            </div>
+
+            <div id="customerPaymentList">
+                <p>Loading your payments...</p>
+            </div>
+
+            <div id="paymentMessage" role="status"></div>
+
+        </section>
+
+    </main>
+
+    <footer class="dashboard-footer">
+        <p>ServeU <span>·</span> Reliable local services, made simple.</p>
+    </footer>
+
+    <script src="script.js"></script>
+    
+    <script src="customer-payment.js"></script>
+
+</body>
+
+</html>

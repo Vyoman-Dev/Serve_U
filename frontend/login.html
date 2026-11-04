@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | ServeU</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+
+    <main class="auth-container">
+
+        <div class="auth-card">
+
+            <!-- Left branding panel -->
+            <section class="auth-brand">
+                <a href="index.html" class="logo">ServeU<span>.</span></a>
+
+                <div class="auth-brand-content">
+                    <p class="auth-eyebrow">WELCOME TO SERVEU</p>
+                    <h2>Good help.<br>Right around<br>the corner.</h2>
+                    <p>
+                        Connect with trusted local professionals
+                        and get your everyday problems solved.
+                    </p>
+                </div>
+
+                <div class="auth-brand-art">
+                    <div class="auth-art-circle"></div>
+                    <span>🛠️</span>
+                    <div class="auth-art-label">Your neighbourhood, your helpers.</div>
+                </div>
+            </section>
+
+            <!-- Right login panel -->
+            <section class="auth-content">
+
+                <div class="auth-heading">
+                    <p class="auth-eyebrow">YOUR ACCOUNT</p>
+                    <h1>Welcome back!</h1>
+                    <p>Login to continue to ServeU.</p>
+                </div>
+
+                <form id="loginForm">
+
+                    <label for="email">Email address</label>
+                    <input type="email" id="email" placeholder="Enter your email" required>
+
+                    <label for="password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" placeholder="Enter your password" required>
+
+                        <button type="button" id="togglePassword" class="password-toggle"
+                            aria-label="Hold to show password">
+                            <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor"
+                                stroke-width="1.8">
+                                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+                                <circle cx="12" cy="12" r="3" />
+                            </svg>
+                        </button>
+                    </div>
+                    <label for="role">Login as</label>
+                    <select id="role" required>
+                        <option value="">Select account type</option>
+                        <option value="CUSTOMER">Customer</option>
+                        <option value="WORKER">Worker</option>
+                        <option value="ADMIN">Admin</option>
+                    </select>
+
+                    <button type="submit">Login to ServeU →</button>
+
+                    <p id="loginMessage"></p>
+
+                </form>
+
+                <p class="auth-register">
+                    Don't have an account?
+                    <a href="register.html">Register here</a>
+                </p>
+
+            </section>
+
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>

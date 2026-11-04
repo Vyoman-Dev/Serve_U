@@ -1,0 +1,301 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Available Workers | ServeU</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<header class="dashboard-nav">
+    <a href="index.html" class="logo">ServeU</a>
+
+    <nav>
+        <a href="customer-dashboard.html">Dashboard</a>
+        <button id="logoutButton" class="logout-btn">Logout</button>
+    </nav>
+</header>
+
+<main class="dashboard-main">
+
+    <section class="dashboard-welcome">
+        <div>
+            <p class="eyebrow">SERVEU PROFESSIONALS</p>
+            <h1 id="categoryTitle">Available Workers</h1>
+            <p>Choose a trusted local professional for your service.</p>
+        </div>
+
+        <div class="welcome-icon">🛠️</div>
+    </section>
+
+    <section class="dashboard-section">
+        <div class="section-heading">
+            <div>
+                <p class="eyebrow">APPROVED PROFESSIONALS</p>
+                <h2>Available Workers</h2>
+            </div>
+            <span id="workerCount">Loading...</span>
+        </div>
+
+        <div id="workerList" class="worker-grid">
+            <p>Loading workers...</p>
+        </div>
+    </section>
+
+</main>
+
+<footer class="dashboard-footer">
+    <p>ServeU — Reliable local services, made simple.</p>
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+const workerList = document.getElementById("workerList");
+const categoryTitle = document.getElementById("categoryTitle");
+const workerCount = document.getElementById("workerCount");
+
+const token = localStorage.getItem("serveUToken");
+const role = localStorage.getItem("serveURole");
+
+const params = new URLSearchParams(window.location.search);
+const category = params.get("category");
+
+if (!token || role !== "CUSTOMER") {
+    window.location.href = "login.html";
+} else if (!category) {
+    workerList.textContent = "No service category selected.";
+    workerCount.textContent = "0 workers";
+} else {
+    categoryTitle.textContent = category;
+    loadWorkers();
+}
+
+async function loadWorkers() {
+    try {
+        const response = await fetch(
+            API_URL + "/workers?category=" + encodeURIComponent(category)
+        );
+
+        if (!response.ok) {
+            throw new Error("Could not load workers.");
+        }
+
+        const workers = await response.json();
+
+        workerList.innerHTML = "";
+
+        workerCount.textContent =
+            workers.length + (workers.length === 1 ? " worker" : " workers");
+
+        if (workers.length === 0) {
+            workerList.textContent =
+                "No approved workers found for this category yet.";
+            return;
+        }
+
+        workers.forEach(function(worker) {
+            const card = document.createElement("div");
+            card.className = "worker-card";
+
+            const name = document.createElement("h3");
+            name.textContent = worker.name;
+
+            const categoryText = document.createElement("p");
+            categoryText.textContent = worker.service_category;
+
+            const experience = document.createElement("p");
+            experience.textContent =
+                "Experience: " + worker.experience_years + " years";
+
+            const description = document.createElement("p");
+            description.textContent =
+                worker.description || "No description provided.";
+
+            const priceHeading = document.createElement("h4");
+            priceHeading.textContent = "Services and Prices";
+
+            card.appendChild(name);
+            card.appendChild(categoryText);
+            card.appendChild(experience);
+            card.appendChild(description);
+            card.appendChild(priceHeading);
+
+            if (worker.prices && worker.prices.length > 0) {
+                worker.prices.forEach(function(price) {
+                    const priceItem = document.createElement("div");
+
+                    const serviceName = document.createElement("h4");
+                    serviceName.textContent = price.service_name;
+
+                    const servicePrice = document.createElement("p");
+                    servicePrice.textContent =
+                        "Service price: ₹" + price.service_price;
+
+                    const inspectionFee = document.createElement("p");
+                    inspectionFee.textContent =
+                        "Inspection fee: ₹" + price.inspection_fee;
+
+                    const bookingForm = document.createElement("form");
+                    bookingForm.className = "booking-form";
+
+                    const descriptionLabel = document.createElement("label");
+                    descriptionLabel.textContent = "Describe your problem";
+
+                    const problemInput = document.createElement("textarea");
+                    problemInput.required = true;
+                    problemInput.maxLength = 1000;
+                    problemInput.placeholder =
+                        "Explain what service or repair you need.";
+
+                    const dateLabel = document.createElement("label");
+                    dateLabel.textContent = "Appointment date";
+
+                    const dateInput = document.createElement("input");
+                    dateInput.type = "date";
+                    dateInput.required = true;
+
+                    const today = new Date();
+                    const localToday = new Date(
+                        today.getTime() - today.getTimezoneOffset() * 60000
+                    ).toISOString().split("T")[0];
+
+                    dateInput.min = localToday;
+
+                    const startLabel = document.createElement("label");
+                    startLabel.textContent = "Preferred start time";
+
+                    const startInput = document.createElement("input");
+                    startInput.type = "time";
+                    startInput.required = true;
+
+                    const endLabel = document.createElement("label");
+                    endLabel.textContent = "Preferred end time";
+
+                    const endInput = document.createElement("input");
+                    endInput.type = "time";
+                    endInput.required = true;
+
+                    const submitButton = document.createElement("button");
+                    submitButton.type = "submit";
+                    submitButton.textContent = "Book Service";
+                    submitButton.className = "primary-btn";
+
+                    const message = document.createElement("p");
+                    message.className = "booking-message";
+
+                    bookingForm.appendChild(descriptionLabel);
+                    bookingForm.appendChild(problemInput);
+                    bookingForm.appendChild(dateLabel);
+                    bookingForm.appendChild(dateInput);
+                    bookingForm.appendChild(startLabel);
+                    bookingForm.appendChild(startInput);
+                    bookingForm.appendChild(endLabel);
+                    bookingForm.appendChild(endInput);
+                    bookingForm.appendChild(submitButton);
+                    bookingForm.appendChild(message);
+
+                    bookingForm.addEventListener("submit", async function(event) {
+                        event.preventDefault();
+
+                        if (endInput.value <= startInput.value) {
+                            message.textContent =
+                                "End time must be later than start time.";
+                            return;
+                        }
+
+                        const confirmed = confirm(
+                            "Service: " + price.service_name +
+                            "\nService price: ₹" + price.service_price +
+                            "\nInspection fee: ₹" + price.inspection_fee +
+                            "\n\nDo you want to submit this booking request?"
+                        );
+
+                        if (!confirmed) {
+                            return;
+                        }
+
+                        submitButton.disabled = true;
+                        submitButton.textContent = "Submitting...";
+                        message.textContent = "";
+
+                        try {
+                            const bookingResponse = await fetch(
+                                API_URL + "/requests",
+                                {
+                                    method: "POST",
+                                    headers: {
+                                        "Content-Type": "application/json",
+                                        "Authorization": "Bearer " + token
+                                    },
+                                    body: JSON.stringify({
+                                        workerId: worker.worker_id,
+                                        priceId: price.price_id,
+                                        description: problemInput.value.trim(),
+                                        appointmentDate: dateInput.value,
+                                        startTime: startInput.value,
+                                        endTime: endInput.value
+                                    })
+                                }
+                            );
+
+                            const result = await bookingResponse.json();
+
+                            if (!bookingResponse.ok) {
+                                throw new Error(
+                                    result.message || "Booking request failed."
+                                );
+                            }
+
+                            message.textContent =
+                                result.message || "Booking request submitted successfully!";
+
+                            bookingForm.reset();
+                            dateInput.min = localToday;
+
+                        } catch (error) {
+                            message.textContent = error.message;
+                        } finally {
+                            submitButton.disabled = false;
+                            submitButton.textContent = "Book Service";
+                        }
+                    });
+
+                    priceItem.appendChild(serviceName);
+                    priceItem.appendChild(servicePrice);
+                    priceItem.appendChild(inspectionFee);
+                    priceItem.appendChild(bookingForm);
+
+                    card.appendChild(priceItem);
+                });
+            } else {
+                const noPrices = document.createElement("p");
+                noPrices.textContent = "No service prices added yet.";
+                card.appendChild(noPrices);
+            }
+
+            workerList.appendChild(card);
+        });
+
+    } catch (error) {
+        workerList.textContent =
+            "Unable to load workers. Please try again.";
+
+        workerCount.textContent = "Unavailable";
+
+        console.error("Worker loading error:", error);
+    }
+}
+</script>
+
+</body>
+</html>

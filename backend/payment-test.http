@@ -1,0 +1,10 @@
+### Submit customer payment
+POST http://localhost:8080/api/customer/payment
+Authorization: Bearer a55a4b90-415b-42a8-a7b2-7936d7835850
+Content-Type: application/json
+
+{
+    "requestId": 2,
+    "paymentMethod": "UPI",
+    "transactionReference": "TEST-UPI-001"
+}

@@ -1,0 +1,3 @@
+
+### Check whether ServeU API is running
+GET http://localhost:8080/api/health

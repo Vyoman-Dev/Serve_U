@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ServeU | Admin Dashboard</title>
+
+    <link rel="stylesheet" href="./admin-dashboard.css">
+</head>
+
+<body>
+
+    <div class="admin-layout">
+
+        <!-- Sidebar -->
+        <aside class="sidebar">
+
+            <div class="logo">serve<span>U.</span></div>
+
+            <p class="sidebar-label">ADMIN MENU</p>
+
+            <nav>
+                <button class="nav-link active" data-section="overview">
+                    Overview
+                </button>
+
+                <button class="nav-link" data-section="workers">
+                    Worker Management
+                </button>
+
+                <button class="nav-link" data-section="customers">
+                    Customers
+                </button>
+
+                <button class="nav-link" data-section="reports">
+                    Reports
+                </button>
+
+                <button class="nav-link" data-section="commissions">
+                    Commission Management
+                </button>
+            </nav>
+
+            <button id="logoutBtn" class="logout-btn">
+                Logout
+            </button>
+
+        </aside>
+
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <header class="topbar">
+                <div>
+                    <h1>Admin Dashboard</h1>
+                    <p>Manage your ServeU marketplace</p>
+                </div>
+
+                <div class="admin-profile">
+                    <span>Administrator</span>
+                </div>
+            </header>
+
+
+            <!-- Overview Section -->
+            <section id="overview" class="dashboard-section active">
+
+                <h2>Overview</h2>
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <p>Total Customers</p>
+                        <h2 id="totalCustomers">0</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Total Workers</p>
+                        <h2 id="totalWorkers">0</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Pending Verifications</p>
+                        <h2 id="pendingWorkers">0</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Pending Reports</p>
+                        <h2 id="pendingReports">0</h2>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- Workers Section -->
+            <section id="workers" class="dashboard-section">
+
+                <h2>Worker Management</h2>
+
+                <div id="workerList">
+                    Loading workers...
+                </div>
+
+            </section>
+
+
+            <!-- Customers Section -->
+            <section id="customers" class="dashboard-section">
+
+                <h2>Customer Management</h2>
+
+                <div id="customerList">
+                    Loading customers...
+                </div>
+
+            </section>
+
+
+            <!-- Reports Section -->
+            <section id="reports" class="dashboard-section">
+
+                <h2>Customer Reports</h2>
+
+                <div id="reportList">
+                    Loading reports...
+                </div>
+
+            </section>
+
+            <!-- Commission Management Section -->
+            <section id="commissions" class="dashboard-section">
+
+                <h2>Commission Management</h2>
+
+                <div class="stats-grid">
+
+                    <div class="stat-card">
+                        <p>Pending Commission</p>
+                        <h2 id="pendingCommission">₹0</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Collected Commission</p>
+                        <h2 id="collectedCommission">₹0</h2>
+                    </div>
+
+                    <div class="stat-card">
+                        <p>Total Commissions</p>
+                        <h2 id="totalCommissions">0</h2>
+                    </div>
+
+                </div>
+
+                <div class="commission-toolbar">
+                    <h3>Commission History</h3>
+
+                    <select id="commissionFilter">
+                        <option value="ALL">All Commissions</option>
+                        <option value="PENDING">Pending</option>
+                        <option value="PAID">Collected</option>
+                    </select>
+                </div>
+
+                <div id="commissionList">
+                    Loading commissions...
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="admin-dashboard.js"></script>
+    <script src="admin-commission.js"></script>
+
+</body>
+
+</html>
